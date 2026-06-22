@@ -21,7 +21,6 @@ Secure D. USB intercepte chaque clé USB branchée, la gèle en lecture seule, e
 
 ## 🏗️ Architecture
 
-
 | Module | Rôle |
 |--------|------|
 | MOD-01 — Intercepteur USB | Détection et gel du transfert à la connexion |
