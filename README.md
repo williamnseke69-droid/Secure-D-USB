@@ -38,8 +38,8 @@ Secure D. USB intercepte chaque clé USB branchée, la gèle en lecture seule, e
 ## 🚀 Installation
 
 ```bash
-git clone https://github.com/<votre-utilisateur>/<nom-du-repo>.git
-cd <nom-du-repo>
+git clone https://github.com/<williamnseke69-droid>/<Secure-D-USB>.git
+cd <Secure-D-USB>
 pip install -r requirements.txt
 ```
 
