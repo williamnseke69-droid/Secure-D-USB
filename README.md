@@ -22,6 +22,20 @@ Secure D. USB intercepte chaque clé USB branchée, la gèle en lecture seule, e
 ## 🏗️ Architecture
 
 
+| Module | Rôle |
+|--------|------|
+| MOD-01 — Intercepteur USB | Détection et gel du transfert à la connexion |
+| MOD-02 — Moteur d'Empreintes | Hashing et reconnaissance des clés connues |
+| MOD-03 — Moteur d'Analyse | Analyse 4 niveaux des fichiers suspects |
+| MOD-04 — Moteur de Score | Calcul du score et décision proportionnelle |
+| MOD-05 — Gestionnaire de Priorités | Ordonnancement du scan, garantie < 10s |
+| MOD-06 — Base de Données | Historique et signatures locales |
+| MOD-07 — Interface Utilisateur | Notifications, rapports, dashboard |
+| MOD-08 — Base Communautaire | Synchronisation des signatures entre utilisateurs |
+
+---
+
+
 ## 🚀 Installation
 
 ```bash
