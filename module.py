@@ -2,7 +2,18 @@ import os
 import stat
 
 executables= [".exe",".dll",".bat",".cmd",".ps1", ".vbs", ".msi",".scr",".com",
-              ".lnk", ".jar", ".reg", ".ade", ".adp", ".apk", ".app", ".appx", ".appcontent-ms", ".application", ".appref-ms", ".asp", ".aspx", ".asx", ".bas", ".bat", ".bgi", ".cab", ".cdxml", ".cer", ".chm", ".cmd", ".cnt", ".com", ".cpl", ".crt", ".csh", ".der", ".diagcab", ".exe", ".fxp", ".gadget", ".grp", ".hlp", ".hpj", ".hta", ".htc", ".img", ".inf", ".ins", ".iso", ".isp", ".its", ".jar", ".jnlp", ".js", ".jse", ".ksh", ".library-ms", ".lnk", ".mad", ".maf", ".mag", ".mam", ".maq", ".mar", ".mas", ".mat", ".mau", ".mav", ".maw", ".mcf", ".mda", ".mdb", ".mde", ".mdt", ".mdw", ".mdz", ".mht", ".mhtml", ".msc", ".msh", ".msh1", ".msh1xml", ".msh2", ".msh2xml", ".mshxml", ".msi", ".msp", ".mst", ".msu", ".ops", ".osd", ".pcd", ".pif", ".pl", ".plg", ".prf", ".prg", ".printerexport", ".ps1", ".ps1xml", ".ps2", ".ps2xml", ".psc1", ".psc2", ".psd1", ".psdm1", ".pssc", ".pst", ".py", ".pyc", ".pyo", ".pyw", ".pyz", ".pyzw", ".reg", ".scf", ".scr", ".search-ms", ".sct", ".settingcontent-ms", ".shb", ".shs", ".theme", ".tmp", ".udl", ".url", ".vb", ".vbe", ".vbp", ".vbs", ".vhd", ".vhdx", ".vsmacros", ".vsw", ".webpnp", ".website", ".ws", ".wsb", ".wsc", ".wsf", ".wsh", ".xbap", ".xll", ".xnk"]
+              ".lnk", ".jar", ".reg", ".ade", ".adp", ".apk", ".app", ".appx", 
+              ".appcontent-ms", ".application", ".appref-ms", ".asp", ".aspx",
+              ".asx", ".bas", ".bat", ".bgi", ".cab", ".cdxml", ".cer", ".chm", ".cmd", ".cnt", ".com",
+              ".cpl", ".crt", ".csh", ".der", ".diagcab", ".exe", ".fxp", ".gadget", ".grp", ".hlp", ".hpj"
+              , ".hta", ".htc", ".img", ".inf", ".ins", ".iso", ".isp", ".its", ".jar", ".jnlp", ".js", ".jse",
+              ".ksh", ".library-ms", ".lnk", ".mad", ".maf", ".mag", ".mam", ".maq", ".mar", ".mas", ".mat", ".mau",
+              ".mav", ".maw", ".mcf", ".mda", ".mdb", ".mde", ".mdt", ".mdw", ".mdz", ".mht", ".mhtml", ".msc", ".msh", 
+              ".msh1", ".msh1xml", ".msh2", ".msh2xml", ".mshxml", ".msi", ".msp", ".mst", ".msu", ".ops", ".osd", ".pcd"
+              , ".pif", ".pl", ".plg", ".prf", ".prg", ".printerexport", ".ps1", ".ps1xml", ".ps2", ".ps2xml", ".psc1", ".psc2",
+              ".psd1", ".psdm1", ".pssc", ".pst", ".py", ".pyc", ".pyo", ".pyw", ".pyz", ".pyzw", ".reg", ".scf", ".scr", ".search-ms",
+              ".sct", ".settingcontent-ms", ".shb", ".shs", ".theme", ".tmp", ".udl", ".url", ".vb", ".vbe", ".vbp", ".vbs", ".vhd", ".vhdx",
+              ".vsmacros", ".vsw", ".webpnp", ".website", ".ws", ".wsb", ".wsc", ".wsf", ".wsh", ".xbap", ".xll", ".xnk"]
 
 fichiers_systeme= ["svchost", "ntoskrnl", "explorer","svchosts",
     "lsass", "lsasses", "crss","winlogon", "wininit", "services",
