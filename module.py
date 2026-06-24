@@ -31,35 +31,19 @@ for path, _, fichiers in os.walk(chemin):
            filesys_prioritaires.append(os.path.join(path,element))
        if extensions =="" :
            without_extensions.append(os.path.join(path,element))          
+       if "." in nom:
+           _,ext=os.path.splitext(nom)
+           if ext in extensions_trompeuses:
+               double_extension.append(element)
+               
 
-for path_explored,_,_ in os.walk(chemin):
-    
-    resultat=subprocess.run(f'dir /ah /b "{path_explored}"', shell=True, capture_output=True, encoding="utf-8") 
-    resultat= resultat.stdout
-    resultat= resultat.splitlines()
-    for element in resultat:
-        
-      fichiers_caches.append(os.path.join(path_explored, element))
-      
-print(fichiers_caches)
-print(len(fichiers_caches))
-    
-for element in fichiers_caches:
-    for path,_,files in os.walk(chemin):
-        if element in files:
-            index= fichiers_caches.index(element)
-            fichiers_caches[index]=os.path.join(path,element)
+for path,_,fichiers in os.walk(chemin):
+    for element in fichiers:
+        element= os.path.join(path, element)
+        metadonnees=os.stat(element)
+        if metadonnees.st_file_attributes & stat.FILE_ATTRIBUTE_HIDDEN == 2:
+            fichiers_caches.append(element)
             
 
-            
-print(fichiers_caches)
-print(len(fichiers_caches))
-   
-    
-
-    
-    
-
-    
 
  
