@@ -1,5 +1,5 @@
 import os 
-import subprocess
+import stat
 
 executables= [".exe",".dll",".bat",".cmd",".ps1", ".vbs", ".msi",".scr",".com",
               ".lnk", ".jar", ".reg"]
