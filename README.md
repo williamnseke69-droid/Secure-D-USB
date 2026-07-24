@@ -1,66 +1,58 @@
 # 🛡️ Secure D. USB
+**Scanner de sécurité USB en temps réel — détecte les menaces avant qu'elles n'atteignent votre système.**
 
-**Scanner de sécurité USB en temps réel** — détecte les menaces avant qu'elles n'atteignent votre système.
-
-Secure D. USB intercepte chaque clé USB branchée, la gèle en lecture seule, et l'analyse selon 4 niveaux de lecture (signatures évidentes, structure interne, métadonnées, référence externe via VirusTotal) avant d'autoriser tout transfert. Verdict en moins de 10 secondes, sans bloquer votre flux de travail.
-
----
+Secure D. USB intercepte chaque clé USB branchée, la protège contre tout transfert non autorisé le temps de l'analyse, et l'examine selon 4 niveaux de lecture (signatures évidentes, structure interne, métadonnées, référence externe via VirusTotal) avant d'autoriser tout transfert. Verdict rapide, sans bloquer durablement votre flux de travail.
 
 ## ✨ Fonctionnalités
 
-- 🔌 **Interception automatique** — détection du branchement USB (udev / WinAPI) et gel immédiat du transfert
-- 🧬 **Mémoire immunitaire locale** — reconnaît les clés déjà analysées via empreintes SHA256, ne réanalyse que ce qui a changé
-- 🔍 **Analyse multi-niveaux** — double extension, entropie, chaînes suspectes, métadonnées, scan VirusTotal
-- 📊 **Scoring intelligent** — score de suspicion 0-100 avec seuils de décision clairs (sain / suspect / très suspect / malware confirmé)
-- ⚡ **Priorisation des fichiers exécutables** — scan immédiat des `.exe .dll .bat .ps1 .vbs ...`, suivi d'un scan complet en arrière-plan
-- 🗄️ **Base de données persistante** — historique des 200 dernières clés, registre permanent des clés suspectes
-- 🖥️ **Interface claire** — notifications en temps réel, rapport de verdict, tableau de bord, export PDF
-- 🌐 **Base communautaire (optionnelle)** — signatures anonymisées partagées entre utilisateurs, conforme RGPD
-
----
+- 🔌 **Interception automatique** — détection du branchement/débranchement USB (WMI), filtrage par type d'événement
+- 🔒 **Isolation de la clé pendant l'analyse** — retrait temporaire de la lettre de lecteur pour empêcher tout transfert humain (Explorateur, AutoPlay) sans bloquer la lecture par le programme lui-même ; réattribution automatique en fin de scan
+- 🧬 **Mémoire immunitaire locale** — reconnaît les clés déjà analysées via un identifiant unique et des empreintes SHA256 par fichier, ne réanalyse que ce qui a changé (ajout, modification, déplacement/renommage)
+- 🔍 **Analyse multi-niveaux** *(en cours de développement)* — catégorisation par type, entropie, métadonnées, scan VirusTotal ciblé et asynchrone
+- 📊 **Scoring intelligent** *(à venir)* — score de suspicion avec seuils de décision clairs
+- 🛑 **Procédure d'arrêt sécurisée** — toute interruption (débranchement en cours de scan) est détectée et gérée proprement : pas de plantage, pas de corruption de la mémoire locale (écriture atomique), reprise automatique du cycle
+- 🗄️ **Mémoire locale persistante** — pas de dépendance à un serveur central ; conçu pour rester utilisable en environnement isolé (air-gapped)
+- 🌐 **Base communautaire** *(vision long terme, non prioritaire pour la v1)* — signatures anonymisées partagées entre utilisateurs
 
 ## 🏗️ Architecture
 
-| Module | Rôle |
-|--------|------|
-| MOD-01 — Intercepteur USB | Détection et gel du transfert à la connexion |
-| MOD-02 — Moteur d'Empreintes | Hashing et reconnaissance des clés connues |
-| MOD-03 — Moteur d'Analyse | Analyse 4 niveaux des fichiers suspects |
-| MOD-04 — Moteur de Score | Calcul du score et décision proportionnelle |
-| MOD-05 — Gestionnaire de Priorités | Ordonnancement du scan, garantie < 10s |
-| MOD-06 — Base de Données | Historique et signatures locales |
-| MOD-07 — Interface Utilisateur | Notifications, rapports, dashboard |
-| MOD-08 — Base Communautaire | Synchronisation des signatures entre utilisateurs |
-
----
-
+| Module | Rôle | État |
+|---|---|---|
+| MOD-01 — Intercepteur USB | Détection du branchement/débranchement, inventaire des fichiers | ✅ Terminé et testé |
+| MOD-02 — Moteur d'Empreintes | Hashing et reconnaissance des clés connues | ✅ Terminé et testé |
+| MOD-03 — Moteur d'Analyse | Analyse 4 niveaux des fichiers | 🚧 En développement |
+| MOD-04 — Moteur de Score | Calcul du score et décision proportionnelle | ⏳ À venir |
+| MOD-05 — Gestionnaire de Priorités | Ordonnancement du scan, verdict rapide | ⏳ À venir |
+| MOD-06 — Base de Données | Historique et signatures locales | ⏳ À venir |
+| MOD-07 — Interface Utilisateur | Notifications, rapports, dashboard | ⏳ À venir |
+| MOD-08 — Base Communautaire | Synchronisation des signatures entre utilisateurs | ⏳ À venir |
+| MOD-09 — Intégrité | Protection du volume pendant l'analyse (isolation, réattribution) | ✅ Terminé et testé |
 
 ## 🚀 Installation
 
-```bash
+```
 git clone https://github.com/<williamnseke69-droid>/<Secure-D-USB>.git
 cd <Secure-D-USB>
 pip install -r requirements.txt
 ```
 
+Nécessite des droits administrateur (protection du volume, gestion des lettres de lecteur).
+
 ## ▶️ Utilisation
 
-```bash
+```
 python main.py
 ```
 
-> Branchez une clé USB : l'analyse démarre automatiquement.
-
----
+Branchez une clé USB : l'analyse démarre automatiquement. Le programme tourne en continu et reprend son attente après chaque cycle, y compris après une interruption imprévue.
 
 ## 🛠️ Stack technique
 
-- **Langage** : Python (lisibilité, écosystème sécurité riche : `hashlib`, `python-magic`, `yara-python`)
-- **Base de données** : SQLite (déploiement sans serveur)
-- **Interface** : Tkinter (v1.0) → Electron envisagé pour version multiplateforme
-- **Référence externe** : API VirusTotal
-
----
+- **Langage** : Python
+- **Interaction système bas niveau (Windows)** : `wmi` (détection d'événements de volume), `pywin32` (`win32file` — gestion des lettres de lecteur et des volumes)
+- **Base de données** : JSON local pour la v1 (mémoire d'empreintes), SQLite envisagé pour l'historique (MOD-06)
+- **Interface** : à définir (Tkinter envisagé pour une v1 en ligne de commande/desktop minimal)
+- **Référence externe** : API VirusTotal (usage ciblé et asynchrone, pas systématique)
 
 ## 🤝 Contribuer
 
@@ -72,4 +64,4 @@ Les contributions sont bienvenues ! Ouvrez une issue ou une pull request pour pr
 
 ---
 
-*Projet en développement actif — v1.0 cible Linux en priorité.*
+Projet en développement actif — **v1.0 cible Windows en priorité** (choix fait après plusieurs jours de développement initial sur Linux, pour pouvoir tester directement en conditions réelles).
